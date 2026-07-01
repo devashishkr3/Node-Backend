@@ -1,0 +1,28 @@
+
+[
+    {
+        "name": "Rahul Kumar",
+        "username": "rahul",
+        "profilePic": "https://i.pravatar.cc/200?img=1",
+        "bio": "Full Stack Developer 🚀",
+        "followers": 15420,
+        "following": 320
+    },
+    {
+        "name": "Aman Singh",
+        "username": "aman",
+        "profilePic": "https://i.pravatar.cc/200?img=2",
+        "bio": "Software Engineer ❤️",
+        "followers": 8450,
+        "following": 201
+    },
+
+    {
+        "name": "Priya Sharma",
+        "username": "priya",
+        "profilePic": "https://i.pravatar.cc/200?img=3",
+        "bio": "UI/UX Designer 🎨",
+        "followers": 25600,
+        "following": 510
+    }
+]
