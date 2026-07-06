@@ -12,13 +12,22 @@ app.get("/search", (req, res) =>{
     res.send(`you searched for ${name}`)
 })
 
-app.get("/:username", (req, res) =>{
+let user = [
+    {
+        username : "dev",
+        profile : "jaosjfoisl",
+        
+    },
+    {
+
+    }
+
+
+]
+
+app.get("/ig/:username", (req, res) =>{
     let {username} = req.params;
-    console.log(username);
-
-    // find for that username on database
-
-
+    // console.log(username);
 
     res.send(`Hello ${username}`);
 })
