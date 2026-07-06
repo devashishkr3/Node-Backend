@@ -18,13 +18,6 @@ p1.talk();
 p2.talk();
 
 
-
-
-
-
-
-
-
 //factory function 
 function personMaker(name, age){
     const person = {
