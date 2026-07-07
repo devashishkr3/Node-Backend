@@ -12,7 +12,11 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@bugsnag/cuid": "^3.2.2",
+    "cuid": "^3.0.0",
     "ejs": "^6.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "method-override": "^3.0.0",
+    "uuid": "^14.0.1"
   }
 }
