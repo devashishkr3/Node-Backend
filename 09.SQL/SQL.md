@@ -1,3 +1,5 @@
+### RAW SQL Commands
+
 ```
 SHOW DATABASES;
 
@@ -108,7 +110,7 @@ CREATE TABLE employees(
     gender VARCHAR(20)
 );
 
-INSERT INTO employees (id, name, email, dept, designation, salary, gender) 
+INSERT INTO employees (id, name, email, dept, designation, salary, gender)
 VALUES 
 (1, 'John Doe', 'john.doe@email.com', 'IT', 'Software Engineer', 75000, 'Male'),
 (2, 'Jane Smith', 'jane.smith@email.com', 'HR', 'HR Manager', 68000, 'Female'),
@@ -148,5 +150,33 @@ FROM table_name
 WHERE condition
 GROUP BY column(s)
 HAVING condition (aggregate)
-ORDER BY column(s) AVG;
+ORDER BY column(s) ASC;
+
+-- deleting employee from employees table
+DELETE FROM employees
+WHERE condition;
+
+-- add a new column in employee table
+ALTER TABLE employees
+ADD COLUMN qualification VARCHAR(30);
+
+-- delete a column
+ALTER TABLE employees
+DROP COLUMN qualification;
+
+-- changing table name using this cmd
+ALTER TABLE staffs
+RENAME TO employees;
+
+SELECT * FROM employees;
+
+-- cahnging column name from old to new
+ALTER TABLE employees
+CHANGE COLUMN email gmail_id VARCHAR(50);
+
+-- to delete all the data from that table (table khali kar deta hai truncate cmd)
+TRUNCATE TABLE employees;
+
+
+
 ```
