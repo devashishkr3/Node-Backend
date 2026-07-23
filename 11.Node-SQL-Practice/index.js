@@ -1,16 +1,8 @@
 const express = require("express");
 const app = express();
-const path = require('path');
 const PORT = 8080;
 const mysql = require("mysql2");
-const faker = require("@faker-js/faker");
 require('dotenv').config();
-
-app.use(express.static("public"));
-app.use(express.static(path.join(__dirname, "/public")));
-
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
 
 const connection = mysql.createConnection({
     user:process.env.DB_USER,
