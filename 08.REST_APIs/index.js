@@ -25,6 +25,8 @@ const app = express();
 const PORT = 8080;
 const cuid = require('cuid');
 const methodOverride = require('method-override');
+const mysql = require("mysql2");
+require("dotenv").config();
 
 
 app.set("view engine", "ejs");
@@ -38,41 +40,34 @@ app.use(express.json());
 
 app.use(methodOverride("_method"));
 
-let posts = [
-    {
-        username: "baba01",
-        content: "This is my first post",
-        id: "10001",
-    },
-    {
-        username: "sachin",
-        content: "I love cricket",
-        id: "10002",
-    },
-    {
-        username: "sourav",
-        content: "game is not over yet",
-        id: "10003",
-    },
-    {
-        username: "tanya",
-        content: "I Love coding",
-        id: "10004",
-    },
-    {
-        username: "devashish",
-        content: "I am a full stack developer",
-        id: "10005",
-    },
-    
-]
+const connection = mysql.createConnection({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+});
 
 app.get("/", (req, res)=>{
     res.render("index.ejs");
 })
 
 app.get("/posts", (req, res) =>{
-    res.render("posts.ejs", {posts});
+
+    let getQuery = 'SELECT * FROM posts'
+    let posts = []
+
+    connection.query(getQuery, (err, result) =>{
+        if(err){
+            return res.status(500).json({
+                message: "Database Error",
+            })
+        }
+        posts = result;
+        res.render("posts.ejs", {posts});
+
+    })
+
+    
 })
 
 app.get("/posts/new", (req, res) =>{
@@ -83,21 +78,43 @@ app.post("/posts", (req, res) =>{
     let {username, content} = req.body;
 
     let id = cuid();
-    
-    posts.push({username, content, id});
-    res.redirect("/posts");
+
+    let addQuery = 'INSERT INTO posts(id, username, content) VALUES(?,?,?)'
+    let newPost = [id, username, content];
+
+    connection.query(addQuery, newPost, (err, result) =>{
+        if(err){
+            return res.status(500).json({
+                message: "Database Error",
+                error: err
+            })
+        }
+        res.redirect("/posts");
+    })
 })
 
 app.get("/posts/:id", (req, res) =>{
     let {id} = req.params;
-    // console.log(id);
-    let post = posts.find((p) => p.id === id);
-    // console.log(post);
-    if(post){
-        res.render("show.ejs", {post});
-    }else{
-        res.send("Post not found.");
-    }
+
+    let getByIdQuery = 'SELECT * FROM posts WHERE id=?'
+    
+    connection.query(getByIdQuery, id, (err, result) =>{
+        if(err){
+            return res.status(500).json({
+                message: "Database Error",
+                error: err
+            })
+        }
+
+        if(result){
+            let post = result[0];
+            res.render("show.ejs", {post});
+        }else{
+            res.send("Post not found.");
+        }
+    })
+    
+    
 })
 
 app.patch("/posts/:id", (req, res) =>{
