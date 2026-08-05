@@ -17,10 +17,14 @@ const connection = mysql.createConnection({
 
 // api for signup/register
 app.post("/signup", (req, res) => {
+  // data from frontend
   const { name, email, password, dob } = req.body;
+  // generate unique id for user
   let id = cuid();
+  // query to insert user data into database
   let registerQuery =
     "INSERT INTO user(id, name, email, password, dob) VALUES(?,?,?,?,?)";
+    // array of user data to be inserted into database
   let userArr = [id, name, email, password, dob];
 
   try {
