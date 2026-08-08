@@ -8,6 +8,12 @@ const cuid = require("cuid");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+
+app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "/public")));
+
 const connection = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -29,14 +35,20 @@ app.post("/signup", (req, res) => {
 
   try {
     connection.query(registerQuery, userArr, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-    });
+      if (err){
+        return res.status(500).json({
+          error: "Database Error",
+          success: false
+        });
+      };
 
-    res.status(201).json({
+      res.status(201).json({
       message: "User Registered Successfully.",
       success: true,
     });
+    });
+
+    
   } catch (error) {
     return res.status(500).json({
       error: "Internal server error",
